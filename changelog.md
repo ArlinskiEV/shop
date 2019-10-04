@@ -7,3 +7,7 @@ recieve mock data from faker
 # FirstComponet
 
 # ProductComponent
+
+# ProductsService
+
+# ProductListComponent
