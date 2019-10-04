@@ -1,1 +1,8 @@
-<p>first works!</p>
+<p>{{ name }}</p>
+<p>{{ description }}</p>
+<p>{{ price }}</p>
+<p>{{ category }}</p>
+<p>All categories: <span *ngFor="let categoryItem of Category; index as i">{{ categoryItem }}{{ i === (Category.length - 1) ? "." : ", "}}</span>
+</p>
+<p>{{ isAvailable }}</p>
+<p>All props: <span *ngFor="let property of props; index as i">{{ property }}{{ i === (props.length - 1) ? "." : ", "}}</span>
