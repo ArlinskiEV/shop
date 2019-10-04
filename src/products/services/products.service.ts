@@ -9,7 +9,7 @@ import { ProductModel } from '../models/product';
 export class ProductsService {
 
   public getProducts(): Observable<Array<ProductModel>> {
-    return of(Array(25)
+    return of(Array(5)
       .fill(0)
       .map(() => ProductModel.fromFaker())
     );

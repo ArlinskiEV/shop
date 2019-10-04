@@ -1,4 +1,6 @@
 <div>
   <p>Products count: {{ products.length }}</p>
-  <p *ngFor="let product of products">{{ product | json }}</p>
+  <div *ngFor="let product of products">
+      <app-product [product]="product"></app-product>
+  </div>
 </div>

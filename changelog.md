@@ -11,3 +11,7 @@ recieve mock data from faker
 # ProductsService
 
 # ProductListComponent
+
+# CartComponent
+
+# CartService

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ProductModel } from 'src/products/models/product';
+import { CartService } from 'src/cart/services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -6,14 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product.component.less']
 })
 export class ProductComponent implements OnInit {
+  @Input()
+  public readonly product: ProductModel;
 
-  constructor() { }
+  constructor(
+    private readonly cartService: CartService
+  ) { }
 
   public ngOnInit(): void {
   }
 
   public onBuy(): void {
-    console.log('Buy product');
+    console.log(`Buy product: ${this.product}`);
+    this.cartService.buyProduct(this.product);
   }
 
 }

@@ -1,1 +1,11 @@
-<button (click)="onBuy()" >Buy</button>
+<div class="app-product">
+  <p><button (click)="onBuy()" >Buy</button> productName: {{ product?.productName }}</p>
+  <p>
+    <span>color: {{ product?.color }}</span>
+    <span>department: {{ product?.department }}</span>
+    <span>price: {{ product?.price }}</span>
+    <span>productAdjective: {{ product?.productAdjective }}</span>
+    <span>productMaterial: {{ product?.productMaterial }}</span>
+    <span>product: {{ product?.product }}</span>
+  </p>
+</div>
