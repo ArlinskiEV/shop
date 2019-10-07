@@ -10,15 +10,14 @@ import { ProductModel } from 'src/products/models/product';
 export class CartComponent implements OnInit {
   public products: Array<ProductModel> = [];
 
-  constructor(
-    private readonly cartService: CartService
-  ) { }
+  constructor(private readonly cartService: CartService) {}
 
   public ngOnInit(): void {
-    this.cartService.getProductsInCart()
+    // В большинстве случаев, если есть подписка, то надо делать и отписку
+    this.cartService
+      .getProductsInCart()
       .subscribe((products: Array<ProductModel>) => {
         this.products = products;
       });
   }
-
 }

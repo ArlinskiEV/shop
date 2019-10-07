@@ -17,10 +17,11 @@ export class ProductListComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    // от подписки надо отписаться
     this.productsService.getProducts()
       .subscribe((products: Array<ProductModel>) => {
         this.products = products;
-        this.cdRef.markForCheck();
+        this.cdRef.markForCheck(); // а это действительно тут необходимо делать?
       });
   }
 

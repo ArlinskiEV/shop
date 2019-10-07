@@ -11,6 +11,7 @@ export class ProductComponent implements OnInit {
   @Input()
   public readonly product: ProductModel;
 
+  // Убрать зависимость
   constructor(
     private readonly cartService: CartService
   ) { }
@@ -20,6 +21,7 @@ export class ProductComponent implements OnInit {
 
   public onBuy(): void {
     console.log(`Buy product: ${this.product}`);
+    // генерить аутпут
     this.cartService.buyProduct(this.product);
   }
 
