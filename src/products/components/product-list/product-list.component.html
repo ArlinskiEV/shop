@@ -1,6 +1,7 @@
 <div>
   <p>Products count: {{ products.length }}</p>
   <div *ngFor="let product of products">
+    <!-- слушать аутпут и выполнять действие в классе -->
       <app-product [product]="product"></app-product>
   </div>
 </div>
