@@ -1,0 +1,6 @@
+<div>
+  <p>Products count: {{ products.length }}</p>
+  <div *ngFor="let product of products">
+      <app-product [product]="product" (buyPriduct)="onBuy($event)"></app-product>
+  </div>
+</div>
