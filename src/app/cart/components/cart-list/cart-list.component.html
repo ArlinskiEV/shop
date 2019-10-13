@@ -1,0 +1,16 @@
+<div>
+  <div>
+    <p>Count: {{ products.length }}</p>
+    <p>Total sun: {{ sum }}</p>
+  </div>
+
+  <div *ngIf="products.length > 0; else empty">
+    <p>List of products:</p>
+    <p *ngFor="let product of products">{{ product.productName }}</p>
+  </div>
+</div>
+
+
+<ng-template #empty>
+  <p>No products in cart</p>
+</ng-template>

@@ -13,7 +13,7 @@ recieve mock data from faker
 
 # ProductListComponent
 
-# CartComponent
+# CartListComponent
 
 # CartService
 
@@ -21,3 +21,4 @@ recieve mock data from faker
 
 # 2
 # CartModule, ProductsModule, SharedModule, OrdersModule
+# CartList

@@ -4,7 +4,7 @@ export interface IProductModel {
   color: string;
   department: string;
   productName: string;
-  price: string;
+  price: number;
   productAdjective: string;
   productMaterial: string;
   product: string;
@@ -14,7 +14,7 @@ export class ProductModel implements IProductModel {
   public readonly color: string;
   public readonly department: string;
   public readonly productName: string;
-  public readonly price: string;
+  public readonly price: number;
   public readonly productAdjective: string;
   public readonly productMaterial: string;
   public readonly product: string;
@@ -36,7 +36,7 @@ export class ProductModel implements IProductModel {
       color: FakerComerse.color(),
       department: FakerComerse.department(),
       productName: FakerComerse.productName(),
-      price: FakerComerse.price(),
+      price: +FakerComerse.price(),
       productAdjective: FakerComerse.productAdjective(),
       productMaterial: FakerComerse.productMaterial(),
       product: FakerComerse.product(),
