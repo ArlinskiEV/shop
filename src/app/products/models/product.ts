@@ -8,6 +8,7 @@ export interface IProductModel {
   productAdjective: string;
   productMaterial: string;
   product: string;
+  count: number;
 }
 export class ProductModel implements IProductModel {
   public readonly color: string;
@@ -17,6 +18,7 @@ export class ProductModel implements IProductModel {
   public readonly productAdjective: string;
   public readonly productMaterial: string;
   public readonly product: string;
+  public count: number;
 
   constructor(init: IProductModel) {
     this.color = init.color;
@@ -26,6 +28,7 @@ export class ProductModel implements IProductModel {
     this.productAdjective = init.productAdjective;
     this.productMaterial = init.productMaterial;
     this.product = init.product;
+    this.count = init.count;
   }
 
   public static fromFaker(): ProductModel {
@@ -37,6 +40,7 @@ export class ProductModel implements IProductModel {
       productAdjective: FakerComerse.productAdjective(),
       productMaterial: FakerComerse.productMaterial(),
       product: FakerComerse.product(),
+      count: Math.floor(Math.random() * 10)
     });
   }
 }
