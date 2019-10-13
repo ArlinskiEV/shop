@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductListComponent } from './product-list.component';
-import { ProductsService } from 'src/products/services/products.service';
+import { ProductsService } from 'src/app/products/services/products.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 

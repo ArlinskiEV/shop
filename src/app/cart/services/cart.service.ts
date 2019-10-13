@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { ProductModel } from 'src/products/models/product';
+import { ProductModel } from 'src/app/products/models/product';
 
 
 @Injectable({
