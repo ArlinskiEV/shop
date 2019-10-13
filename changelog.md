@@ -1,3 +1,4 @@
+# 1
 # package.json
 scripts: { "start": "ng lint && ng serve -o" }
 
@@ -15,3 +16,8 @@ recieve mock data from faker
 # CartComponent
 
 # CartService
+
+# work with errors
+
+# 2
+# CartModule, ProductsModule, SharedModule, OrdersModule

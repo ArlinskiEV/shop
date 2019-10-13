@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ProductsService } from 'src/app/products/services/products.service';
 import { ProductModel } from 'src/app/products/models/product';
-import { BaseComponent } from 'src/app/base/base.component';
+import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { CartService } from 'src/app/cart/services/cart.service';
 
 @Component({

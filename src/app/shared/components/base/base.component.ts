@@ -53,16 +53,3 @@ class Base {
     console.log('base fn');
   }
 }
-
-class Child extends Base {
-  constructor() {
-    super();
-    console.log('child');
-  }
-
-  fn() {
-    console.log('child fn');
-  }
-}
-
-new Child().fn();
