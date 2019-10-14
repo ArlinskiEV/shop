@@ -1,12 +1,16 @@
 <div>
   <div>
-    <p>Count: {{ products.length }}</p>
-    <p>Total sun: {{ sum }}</p>
+    <p>Count: {{ count }}</p>
+    <p>Total sum: {{ sum }}</p>
   </div>
 
   <div *ngIf="products.length > 0; else empty">
     <p>List of products:</p>
-    <p *ngFor="let product of products">{{ product.productName }}</p>
+    <app-cart-item
+      *ngFor="let product of products"
+      [product]="product"
+      (changeCount)="onChangeCount($event)"
+    ></app-cart-item>
   </div>
 </div>
 

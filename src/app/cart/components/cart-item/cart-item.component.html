@@ -1,0 +1,17 @@
+<p class="app-cart-item__list">
+  <span class="app-cart-item__item">{{ product?.productName }}</span>
+  <button
+    class="app-cart-item__item"
+    (click)="onSub()"
+  >-</button>
+  <span class="app-cart-item__item">({{ product?.count }})</span>
+  <button
+    class="app-cart-item__item"
+    (click)="onAdd()"
+  >+</button>
+  <!-- TODO: think how to store available count -->
+  <button
+    class="app-cart-item__item"
+    (click)="onRemove()"
+  >remove</button>
+</p>
