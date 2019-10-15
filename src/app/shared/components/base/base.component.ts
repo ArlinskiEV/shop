@@ -37,32 +37,3 @@ export class BaseComponent implements OnDestroy {
       });
   }
 }
-
-class Base {
-  constructor() {
-    console.log('base');
-    const childFn = this.fn;
-    this.fn = () => {
-      childFn();
-      this.baseFn();
-    };
-  }
-  fn() {
-  }
-  baseFn() {
-    console.log('base fn');
-  }
-}
-
-class Child extends Base {
-  constructor() {
-    super();
-    console.log('child');
-  }
-
-  fn() {
-    console.log('child fn');
-  }
-}
-
-new Child().fn();

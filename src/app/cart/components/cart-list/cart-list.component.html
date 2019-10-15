@@ -1,0 +1,21 @@
+<div>
+  <div>
+    <p>Count: {{ count }}</p>
+    <p>Total sum: {{ sum }}</p>
+  </div>
+
+  <div *ngIf="items.length > 0; else empty">
+    <p>List of products:</p>
+    <app-cart-item
+      *ngFor="let item of items"
+      [item]="item"
+      (changeCount)="onChangeCount($event)"
+      appHighlight
+    ></app-cart-item>
+  </div>
+</div>
+
+
+<ng-template #empty>
+  <p>No products in cart</p>
+</ng-template>

@@ -11,8 +11,9 @@ describe('ProductListComponent', () => {
   let productsServiceSpy: jasmine.SpyObj<ProductsService>;
 
   beforeEach(async(() => {
-    productsServiceSpy = jasmine.createSpyObj('ProductsService', ['getProducts']);
-    productsServiceSpy.getProducts.and.returnValue(of([]));
+    productsServiceSpy = jasmine.createSpyObj('ProductsService', ['getProducts', 'getCounts']);
+    productsServiceSpy.getProducts.and.returnValue(of({}));
+    productsServiceSpy.getCounts.and.returnValue(of({}));
     TestBed.configureTestingModule({
       declarations: [ ProductListComponent ],
       providers: [

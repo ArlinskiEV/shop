@@ -1,0 +1,17 @@
+<p class="app-cart-item__list">
+  <span class="app-cart-item__item">{{ item?.product?.productName }}</span>
+  <button
+    class="app-cart-item__item"
+    (click)="onSub()"
+  >-</button>
+  <span class="app-cart-item__item">({{ item?.count }})</span>
+  <button
+    class="app-cart-item__item"
+    (click)="onAdd()"
+    [disabled]="item?.available <= 0"
+  >+</button>
+  <button
+    class="app-cart-item__item"
+    (click)="onRemove()"
+  >remove</button>
+</p>
