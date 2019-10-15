@@ -23,3 +23,4 @@ recieve mock data from faker
 # CartModule, ProductsModule, SharedModule, OrdersModule
 # CartList
 # CartItem
+# <h1 #appTitle></h1>
