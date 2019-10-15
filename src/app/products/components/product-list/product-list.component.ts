@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ProductsService } from 'src/app/products/services/products.service';
-import { ProductModel } from 'src/app/products/models/product';
+import { ProductModel, ProductsStore, ProductsCountsStore } from 'src/app/products/models/product';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { CartService } from 'src/app/cart/services/cart.service';
 
@@ -13,6 +13,7 @@ import { CartService } from 'src/app/cart/services/cart.service';
 export class ProductListComponent extends BaseComponent implements OnInit {
 
   public products: Array<ProductModel> = [];
+  public counts: ProductsCountsStore = {};
 
   constructor(
     private readonly cdRef: ChangeDetectorRef,
@@ -25,8 +26,16 @@ export class ProductListComponent extends BaseComponent implements OnInit {
   public ngOnInit(): void {
     this.unsubscribeOnDestroy(
       this.productsService.getProducts()
-        .subscribe((products: Array<ProductModel>) => {
-          this.products = products;
+        .subscribe((products: ProductsStore) => {
+          this.products = Object.values(products);
+          this.cdRef.markForCheck();
+        })
+    );
+
+    this.unsubscribeOnDestroy(
+      this.productsService.getCounts()
+        .subscribe((counts: ProductsCountsStore) => {
+          this.counts = counts;
           this.cdRef.markForCheck();
         })
     );

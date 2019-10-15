@@ -4,12 +4,13 @@
     <p>Total sum: {{ sum }}</p>
   </div>
 
-  <div *ngIf="products.length > 0; else empty">
+  <div *ngIf="items.length > 0; else empty">
     <p>List of products:</p>
     <app-cart-item
-      *ngFor="let product of products"
-      [product]="product"
+      *ngFor="let item of items"
+      [item]="item"
       (changeCount)="onChangeCount($event)"
+      appHighlight
     ></app-cart-item>
   </div>
 </div>

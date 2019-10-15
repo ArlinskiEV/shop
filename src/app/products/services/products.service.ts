@@ -1,63 +1,61 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { ProductModel } from 'src/app/products/models/product';
-
+import { Observable, BehaviorSubject } from 'rxjs';
+import { ProductModel, ProductsStore, ProductsCountsStore } from 'src/app/products/models/product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  private readonly products: BehaviorSubject<Array<ProductModel>> = new BehaviorSubject([]);
-
+  private readonly products: BehaviorSubject<ProductsStore> = new BehaviorSubject({});
+  private readonly counts: BehaviorSubject<ProductsCountsStore> = new BehaviorSubject({});
   constructor() {
-    this.products
-      .next(Array(5)
-        .fill(0)
-        .map(() => ProductModel.fromFaker())
-      );
+    this.products.next(this.createProducts(5));
+    this.counts.next(this.createCounts(this.products.value));
   }
 
-  public getProducts(): Observable<Array<ProductModel>> {
+  private createProducts(count: number): ProductsStore {
+    return Array(count)
+      .fill(0)
+      .reduce((products: ProductsStore) => {
+        const product = ProductModel.fromFaker();
+        return Object.assign(products, { [product.id]: product });
+      }, {});
+  }
+
+  private createCounts(products: ProductsStore): ProductsCountsStore {
+    return Object.keys(products)
+      .reduce((counts: ProductsCountsStore, id) => {
+        return Object.assign(counts, { [id]: Math.floor(Math.random() * 10) });
+      }, {});
+  }
+
+  public getProducts(): Observable<ProductsStore> {
     return this.products.asObservable();
   }
 
-  public buyProduct(productToBuy: ProductModel): boolean {
-    let result: boolean = true;
-    const productIndex: number = this.getProductIndex(productToBuy);
-    const product: ProductModel = new ProductModel({
-      ...productToBuy,
-      count: this.products.value[productIndex].count - 1
-    });
-    if (product.count < 0) {
-      product.count = 0;
-      result = false;
+  public getCounts(): Observable<ProductsCountsStore> {
+    return this.counts.asObservable();
+  }
+
+  public buyProduct(product: ProductModel): boolean {
+    const productCount: number = this.counts.value[product.id];
+    if (productCount < 0) {
+      return false;
     }
 
-    this.products.next([
-      ...this.products.value.slice(0, productIndex),
-      product,
-      ...this.products.value.slice(productIndex + 1)
-    ]);
-
-    return result;
-  }
-
-  public returnProduct(productToReturn: ProductModel, count: number): void {
-    const productIndex: number = this.getProductIndex(productToReturn);
-    const product: ProductModel = new ProductModel({
-      ...productToReturn,
-      count: this.products.value[productIndex].count + count
+    this.counts.next({
+      ...this.counts.value,
+      [product.id]: productCount - 1
     });
-
-    this.products.next([
-      ...this.products.value.slice(0, productIndex),
-      product,
-      ...this.products.value.slice(productIndex + 1)
-    ]);
+    return true;
   }
 
-  private getProductIndex(product: ProductModel): number {
-    return this.products.value
-      .findIndex((p: ProductModel) => p.productName === product.productName);
+  public returnProduct(product: ProductModel, count: number): void {
+    const productCount: number = this.counts.value[product.id];
+
+    this.counts.next({
+      ...this.counts.value,
+      [product.id]: productCount + count
+    });
   }
 }

@@ -24,3 +24,5 @@ recieve mock data from faker
 # CartList
 # CartItem
 # <h1 #appTitle></h1>
+# Highlight
+# ProductsStore ProductsCountsStore

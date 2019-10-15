@@ -1,85 +1,99 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { ProductModel } from 'src/app/products/models/product';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { ProductModel, ProductsCountsStore, ProductsStore } from 'src/app/products/models/product';
 import { ProductsService } from 'src/app/products/services/products.service';
 
+export interface ICartItem {
+  product: ProductModel;
+  count: number;
+  available: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
-  private readonly cart: BehaviorSubject<Array<ProductModel>> = new BehaviorSubject([]);
+export class CartService implements OnDestroy {
+  private readonly data: BehaviorSubject<Array<ICartItem>> = new BehaviorSubject([]);
+  private readonly subscriptions: Array<Subscription> = [];
 
-  constructor(private readonly productsService: ProductsService) { }
+  private productsCounts: ProductsCountsStore = {};
+  private products: ProductsStore = {};
+  private counts: ProductsCountsStore = {};
 
-  public getProductsInCart(): Observable<Array<ProductModel>> {
-    return this.cart.asObservable();
+  constructor(private readonly productsService: ProductsService) {
+    this.subscriptions.push(
+      this.productsService.getProducts()
+        .subscribe((products: ProductsStore) => {
+          this.products = products;
+          this.updateData();
+        }),
+      this.productsService.getCounts()
+        .subscribe((productsCounts: ProductsCountsStore) => {
+          this.productsCounts = productsCounts;
+          this.updateData();
+        })
+    );
   }
 
-  public buyProduct(productToBuy: ProductModel): void {
-    if (!this.productsService.buyProduct(productToBuy)) {
+  private updateData() {
+    this.data.next(
+      Object.keys(this.products)
+        .filter((id: string) => this.counts[id])
+        .map((id: string) => ({
+          product: this.products[id],
+          count: this.counts[id],
+          available: this.productsCounts[id]
+        }))
+    );
+  }
+
+  public ngOnDestroy() {
+    this.subscriptions
+      .forEach((subscription: Subscription) => subscription.unsubscribe());
+  }
+
+  public getProductsInCart(): Observable<Array<ICartItem>> {
+    return this.data.asObservable();
+  }
+
+  public buyProduct(product: ProductModel): void {
+    const productCount: number = this.counts[product.id] || 0;
+    if (!this.productsService.buyProduct(product)) {
       return;
     }
 
-    const productIndex: number = this.getProductIndex(productToBuy);
-    if (productIndex !== -1) {
-      const product: ProductModel = new ProductModel({
-        ...productToBuy,
-        count: this.cart.value[productIndex].count + 1
-      });
-
-      this.cart.next([
-        ...this.cart.value.slice(0, productIndex),
-        product,
-        ...this.cart.value.slice(productIndex + 1)
-      ]);
-    }
-    else {
-      const product: ProductModel = new ProductModel({
-        ...productToBuy,
-        count: 1
-      });
-
-      this.cart.next([
-        ...this.cart.value,
-        product
-      ]);
-    }
+    this.counts = {
+      ...this.counts,
+      [product.id]: productCount + 1
+    };
+    this.updateData();
   }
 
-  public subProduct(productToSub: ProductModel): void {
-    if (productToSub.count === 1) {
-      this.remProduct(productToSub);
+  public subProduct(product: ProductModel): void {
+    const productCount: number = this.counts[product.id];
+    if (productCount === 1) {
+      this.remProduct(product);
       return;
     }
 
-    this.productsService.returnProduct(productToSub, 1);
+    this.productsService.returnProduct(product, 1);
 
-    const productIndex: number = this.getProductIndex(productToSub);
-    const product: ProductModel = new ProductModel({
-      ...productToSub,
-      count: this.cart.value[productIndex].count - 1
-    });
-
-    this.cart.next([
-      ...this.cart.value.slice(0, productIndex),
-      product,
-      ...this.cart.value.slice(productIndex + 1)
-    ]);
+    this.counts = {
+      ...this.counts,
+      [product.id]: productCount - 1
+    };
+    this.updateData();
   }
 
-  public remProduct(productToRem: ProductModel): void {
-    this.productsService.returnProduct(productToRem, productToRem.count);
+  public remProduct(product: ProductModel): void {
+    const productCount: number = this.counts[product.id];
+    this.productsService.returnProduct(product, productCount);
 
-    const productIndex: number = this.getProductIndex(productToRem);
-    this.cart.next([
-      ...this.cart.value.slice(0, productIndex),
-      ...this.cart.value.slice(productIndex + 1)
-    ]);
-  }
+    this.counts = {
+      ...this.counts,
+      [product.id]: 0
+    };
 
-  private getProductIndex(product: ProductModel): number {
-    return this.cart.value
-      .findIndex((p: ProductModel) => p.productName === product.productName);
+    this.updateData();
   }
 }

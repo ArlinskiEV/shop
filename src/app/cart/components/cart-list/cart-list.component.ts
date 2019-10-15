@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { CartService } from 'src/app/cart/services/cart.service';
-import { ProductModel } from 'src/app/products/models/product';
+import { CartService, ICartItem } from 'src/app/cart/services/cart.service';
+import { ProductModel, ProductsStore } from 'src/app/products/models/product';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartListComponent extends BaseComponent implements OnInit {
-  public products: Array<ProductModel> = [];
+  public items: Array<ICartItem> = [];
   public sum: number = 0;
   public count: number = 0;
 
@@ -25,13 +25,13 @@ export class CartListComponent extends BaseComponent implements OnInit {
     this.unsubscribeOnDestroy(
       this.cartService
         .getProductsInCart()
-        .subscribe((products: Array<ProductModel>) => {
-          this.products = products;
-          const { sum, count } = products
-            .reduce(({ sum, count }: { sum: number, count: number }, product: ProductModel) =>
+        .subscribe((items: Array<ICartItem>) => {
+          this.items = items;
+          const { sum, count } = items
+            .reduce(({ sum, count }: { sum: number, count: number }, item: ICartItem) =>
               ({
-                sum: sum + (product.price * product.count),
-                count: count + product.count
+                sum: sum + (item.product.price * item.count),
+                count: count + item.count
               }),
               ({ sum: 0, count: 0})
             );

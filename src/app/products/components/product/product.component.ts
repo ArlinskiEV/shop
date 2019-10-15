@@ -10,6 +10,8 @@ import { ProductModel } from 'src/app/products/models/product';
 export class ProductComponent {
   @Input()
   public readonly product: ProductModel;
+  @Input()
+  public readonly count: number;
   @Output()
   public readonly buyPriduct: EventEmitter<ProductModel> = new EventEmitter();
 
