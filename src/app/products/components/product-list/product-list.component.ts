@@ -24,6 +24,7 @@ export class ProductListComponent extends BaseComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // Не уверен, что стоит использовать такой прием
     this.unsubscribeOnDestroy(
       this.productsService.getProducts()
         .subscribe((products: ProductsStore) => {

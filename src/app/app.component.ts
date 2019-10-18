@@ -11,6 +11,7 @@ export class AppComponent implements AfterViewInit {
   public title: ElementRef<HTMLHeadElement>;
 
   public ngAfterViewInit(): void {
+    // Желательно использовать Renderer2
     this.title.nativeElement.textContent = 'shop';
   }
 }
