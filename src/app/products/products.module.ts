@@ -4,7 +4,7 @@ import { ProductComponent } from './components/product/product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 
 const components = [
-  ProductComponent,
+  ProductComponent, // этот компонент не обязательно делать публичным
   ProductListComponent
 ];
 
