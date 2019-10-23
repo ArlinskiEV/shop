@@ -36,3 +36,6 @@ recieve mock data from faker
 # increaseQuantity()/decreaseQuantity() - увеличить/уменьшить количество для указаного товара
 # removeAllProducts() - очистить корзину
 # updateCartData()
+
+# 4
+# CurrencyPipe (src/app/products/components/product/product.component.html:6)
