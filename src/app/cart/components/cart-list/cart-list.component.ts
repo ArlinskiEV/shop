@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { CartService, ICartItem } from 'src/app/cart/services/cart.service';
+import { CartService, ICartItem, ICartInfo } from 'src/app/cart/services/cart.service';
 import { ProductModel, ProductsStore } from 'src/app/products/models/product';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 
@@ -25,18 +25,10 @@ export class CartListComponent extends BaseComponent implements OnInit {
     this.unsubscribeOnDestroy(
       this.cartService
         .getProductsInCart()
-        .subscribe((items: Array<ICartItem>) => {
-          this.items = items;
-          const { sum, count } = items
-            .reduce(({ sum, count }: { sum: number, count: number }, item: ICartItem) =>
-              ({
-                sum: sum + (item.product.price * item.count),
-                count: count + item.count
-              }),
-              ({ sum: 0, count: 0})
-            );
-          this.sum = sum;
-          this.count = count;
+        .subscribe(({ carts, totalQuantity, totalSum }: ICartInfo) => {
+          this.items = carts;
+          this.sum = totalSum;
+          this.count = totalQuantity;
 
           this.cdRef.markForCheck();
         })
@@ -46,13 +38,13 @@ export class CartListComponent extends BaseComponent implements OnInit {
   public onChangeCount({ add, sub, rem }: { add?: ProductModel, sub?: ProductModel, rem: ProductModel }): void {
     // TODO: need refactoring
     if (add) {
-      this.cartService.buyProduct(add);
+      this.cartService.increaseQuantity(add);
     }
     else if (sub) {
-      this.cartService.subProduct(sub);
+      this.cartService.decreaseQuantity(sub);
     }
     else if (rem) {
-      this.cartService.remProduct(rem);
+      this.cartService.removeProduct([rem]);
     }
   }
 }

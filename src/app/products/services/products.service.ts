@@ -37,15 +37,15 @@ export class ProductsService {
     return this.counts.asObservable();
   }
 
-  public buyProduct(product: ProductModel): boolean {
+  public buyProduct(product: ProductModel, count = 1): boolean {
     const productCount: number = this.counts.value[product.id];
-    if (productCount < 0) {
+    if (productCount < count) {
       return false;
     }
 
     this.counts.next({
       ...this.counts.value,
-      [product.id]: productCount - 1
+      [product.id]: productCount - count
     });
     return true;
   }
