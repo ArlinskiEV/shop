@@ -2,12 +2,19 @@
   <div>
     <p>Count: {{ count }}</p>
     <p>Total sum: {{ sum }}</p>
+    <select [formControl]="sortControl">
+      <option
+        *ngFor="let option of sortOptions"
+        [ngValue]="option"
+        [selected]="option === sortBy"
+      >{{ option.name }}</option>
+    </select>
   </div>
 
   <div *ngIf="items.length > 0; else empty">
     <p>List of products:</p>
     <app-cart-item
-      *ngFor="let item of items | orderBy:'count'"
+      *ngFor="let item of items | orderBy:sortBy.value"
       [item]="item"
       (changeCount)="onChangeCount($event)"
       appHighlight
