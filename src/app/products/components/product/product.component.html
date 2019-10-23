@@ -1,11 +1,11 @@
 <div class="app-product">
   <p><button (click)="onBuy()" [disabled]="!count">Buy ({{ count }})</button> productName: {{ product?.productName }}</p>
-  <p>
-    <span>color: {{ product?.color }}</span>
-    <span>department: {{ product?.department }}</span>
-    <span>price: {{ product?.price }}</span>
-    <span>productAdjective: {{ product?.productAdjective }}</span>
-    <span>productMaterial: {{ product?.productMaterial }}</span>
-    <span>product: {{ product?.product }}</span>
-  </p>
+  <div>
+    <p>color: {{ product?.color }}</p>
+    <p>department: {{ product?.department }}</p>
+    <p>price: {{ product?.price | currency:'CAD':'symbol-narrow':'4.2-2' }}</p>
+    <p>productAdjective: {{ product?.productAdjective }}</p>
+    <p>productMaterial: {{ product?.productMaterial }}</p>
+    <p>product: {{ product?.product }}</p>
+  </div>
 </div>

@@ -43,6 +43,6 @@ export class ProductListComponent extends BaseComponent implements OnInit {
   }
 
   public onBuy(product: ProductModel): void {
-    this.cartService.buyProduct(product);
+    this.cartService.addProduct(product, 1);
   }
 }
