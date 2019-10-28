@@ -37,6 +37,8 @@ recieve mock data from faker
 # removeAllProducts() - очистить корзину
 # updateCartData()
 
+<!-- А где все остальные сервисы? -->
+
 # 4
 # CurrencyPipe (src/app/products/components/product/product.component.html:6)
 # OrderByPipe (src/app/cart/components/cart-list/cart-list.component.html:17)

@@ -12,7 +12,7 @@ import { CartService } from 'src/app/cart/services/cart.service';
 })
 export class ProductListComponent extends BaseComponent implements OnInit {
 
-  public products: Array<ProductModel> = [];
+  public products: Array<ProductModel> = []; // в 4 задании это должен быть Observable
   public counts: ProductsCountsStore = {};
 
   constructor(
